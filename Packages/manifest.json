@@ -4,6 +4,7 @@
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.burst": "1.8.27",
     "com.unity.cinemachine": "2.10.5",
+    "com.unity.cloud.gltfast": "6.20.0",
     "com.unity.editorcoroutines": "1.0.1",
     "com.unity.ext.nunit": "2.0.5",
     "com.unity.ide.rider": "3.0.38",

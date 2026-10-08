@@ -36,7 +36,7 @@ A LAN multiplayer kart racer for Eric's 5th birthday.
 | Scenes | `Boot` → `MainMenu` → `Race_<Track>` (loaded by NGO scene management, so clients follow the host) | Clean flow, no singletons-from-nowhere |
 | Build | Windows x64 (Mono), zipped and copied by USB or a shared folder | Fast builds. Linux is one more build target later |
 | Lobby | **3D Fortnite-style lobby scene**: 4 pedestals, each player's character idles on their spot with a name and ready badge, and changes live as they browse | The "wow" moment for the kids, and it doubles as character select |
-| Characters | `CharacterDefinition` SO + an `ICharacterView` adapter, with a shared **Humanoid** Animator controller | New family models from Pinoc = import the FBX, set the rig to Humanoid, create one SO asset. No code |
+| Characters | `CharacterDefinition` SO + `CharacterView` on a shared **Humanoid** rig/animator, seated by `KartCharacterSlot` | New family models from Pinoc = import the FBX, set the rig to Humanoid, create one SO asset. No code |
 | Testing | **Multiplayer Play Mode** package (virtual players inside the editor) plus 2 local builds | Fast iteration without walking between laptops |
 
 ---
@@ -75,28 +75,29 @@ Assets/_EricRacer/
 ### Character system (ready for the Pinoc family models)
 ```
 CharacterDefinition (SO)           CharacterCatalog (SO)  ── index (byte) synced over network
-  displayName, portrait sprite       List<CharacterDefinition>
-  lobbyPrefab   (full body, idles on a pedestal)
-  driverPrefab  (sits in the kart; may be the same model)
-  kartColor / kart skin
-        │ prefab root has a component implementing
+  displayName, portrait sprite       CharacterDefinition[] (wraps around when browsing)
+  driverPrefab → CharacterView
+  kartColor (tints the kart body)
+        │
         ▼
-ICharacterView  (Adapter + Strategy)
-  PlayIdle() · PlaySelected() · PlayVictory() · PlayDriving(steer)
-  ├─ HumanoidCharacterView: drives the shared EricRacer_Humanoid.controller (Pinoc models)
-  └─ KartRacerCharacterView: wraps the existing Cat/Chicken/Knight part prefabs
+CharacterView (on every character prefab root)
+  Humanoid Animator + the Karting PlayerController (Steering, Grounded) · SetSteering · Hop
+KartCharacterSlot (on race kart AND lobby/title display kart)
+  Apply(definition): hides the template driver, seats the character, rebinds steering animation, tints the kart
 ```
-**Adding a family member later:** import the FBX with animations → Rig = *Humanoid* → make a prefab with `HumanoidCharacterView` → create a `CharacterDefinition` → add it to the catalog. Done. *(Needed from the Pinoc models: a humanoid skeleton, and ideally idle, wave/selected, victory and sitting clips. Missing clips fall back to idle.)*
+*As built (Phase 4):* every existing character (Classic, Cat, Chicken, Knight) turned out to be the **same Humanoid rig** using the same animator, so one `CharacterView` replaces the planned adapter pair. The Cat/Chicken/Knight prefabs are composed from the add-on body plus head/helmet/wings/backpack parented to the `Head`/`Spine2` bones.
+
+**Adding a family member later:** import the FBX → Rig = *Humanoid* → prefab with `Animator` (PlayerController) + `CharacterView` → `CharacterDefinition` asset → add to `CharacterCatalog`. No code. *(Needed from Pinoc: a humanoid skeleton. Only seated driving clips exist today, so the lobby shows racers seated in their karts on spinning pedestals; standing/wave clips could be added as an optional lobby animation later.)*
 
 ### Lobby scene (Fortnite-style)
 ```
 LobbyStage: 4 pedestals (slot 0 = host) · spotlight per slot · birthday banner · confetti
 Per player slot ── LobbySlotView observes PlayerSession (name, characterIndex, isReady)
-                    └─ swaps the ICharacterView model when characterIndex changes (pooled)
-Local controls:  ◀ ▶ (D-pad/stick/arrow keys) browse characters · A/Enter = Ready · B = un-ready
-Host panel:      track picker · laps · START (enabled when everyone is ready)
+                    └─ KartCharacterSlot.Apply when characterIndex changes (pop + hop), confetti + green light on ready
+Local controls:  ◀ ▶ (D-pad/stick/arrows/A,D) browse · A/Space = Ready · B/Backspace = un-ready · Esc/View = menu
+Host panel:      laps (LB/RB, Q/E, mouse) · START (Start/Enter/mouse, enabled when everyone is ready)
 Flow:            LobbyState(server) ─ all ready + host START ─► NGO loads Race scene ─► Countdown
-After results:   "Race again" ─► back to the Lobby scene, still connected
+After results:   host picks RACE AGAIN (same track) or LOBBY (pick new racers); everyone stays connected
 ```
 `PlayerSession` is a per-client `NetworkObject` that persists across scenes (DontDestroyOnLoad via NGO) and holds `NetworkVariable`s: name, characterIndex, slot and isReady. Lobby and race both read from it, and it's the single source of player identity.
 
@@ -178,13 +179,13 @@ Every step ends with **a definition of done (DoD)** that I check through MCP: it
 - **DoD:** ✅ editor: grid→countdown→GO unlock, wrong-gate ignored, 3 laps, finish, results, race again · ✅ 3 windows: grid waits for all, synced countdown, client finish validated by server · ⏳ **you:** play a 3-lap race in the editor with a gamepad
 
 ### Phase 4: Title, 3D Lobby and HUD (Sat afternoon, about 4 h)
-- [ ] 4.1 **"Happy Birthday Eric!" title screen**: a 3D scene with a kart slowly spinning, a big title, balloons/confetti, then **Host** / **Join** (auto-list of found games) / name entry. Fully gamepad-navigable (Input System UI module)
-- [ ] 4.2 `CharacterDefinition` / `CharacterCatalog` / `ICharacterView` (+ the `KartRacerCharacterView` adapter for Cat, Chicken and Knight, + `HumanoidCharacterView` ready for Pinoc). Include an (optional for now) `superPower` field
-- [ ] 4.3 `PlayerSession` network object (name, characterIndex, slot, isReady)
-- [ ] 4.4 **Fortnite-style lobby scene**: pedestals, live character browsing, ready badges, host track/laps picker and a START button
-- [ ] 4.5 The chosen character drives the kart in the race (`driverPrefab` spawned into the kart seat)
-- [ ] 4.6 HUD: big lap counter, position badge, 3-2-1-GO, name tags above karts
-- **DoD:** title → lobby (4 players browsing and readying) → race → results → back to lobby, using only gamepads
+- [x] 4.1 **"Happy Birthday Eric!" title screen**: a 3D scene with a kart slowly spinning, a big title, balloons/confetti, then **Host** / **Join** (auto-list of found games) / name entry. Fully gamepad-navigable (Input System UI module)
+- [x] 4.2 `CharacterDefinition` / `CharacterCatalog` / `ICharacterView` (one `CharacterView` for all: they share the Humanoid rig) + `KartCharacterSlot`. (`superPower` field added in Phase 5 with the power framework)
+- [x] 4.3 `PlayerSession` network object (name, characterIndex, slot, isReady)
+- [x] 4.4 **Fortnite-style lobby scene**: pedestals, live character browsing, ready badges, host track/laps picker and a START button
+- [x] 4.5 The chosen character drives the kart in the race (`driverPrefab` spawned into the kart seat)
+- [x] 4.6 HUD: big lap counter, position badge, 3-2-1-GO, name tags above karts
+- **DoD:** ✅ editor: title → host → lobby → ready → START → race in chosen racer → results → LOBBY → leave to title, zero errors · ✅ 3 windows: lobby with 3 different racers, auto-ready, race with all karts synced · ⏳ **you:** the same with real gamepads
 
 ### Phase 5: Birthday polish (Sat evening / Sun morning, timeboxed)
 Ranked; we stop wherever time runs out:
@@ -205,7 +206,7 @@ Ranked; we stop wherever time runs out:
 If we fall behind, **Phases 0–3 + 4.1 (title) + a simple lobby (4.2–4.4 without the 3D stage polish) + 6** is a complete, playable birthday game. Everything else is bonus.
 
 ### Later (after the party)
-- Family characters from Pinoc (pipeline above; zero code): Eric, Kamil, Liliana, Justyna
+- Family characters: **Avaturn works** (Daniel added Thu night: rigged GLB → Humanoid → racer, see `add-avaturn-character` skill). Pinoc `.ply` is a Gaussian splat (no mesh), so it's unusable as a character; the Pinoc dance FBX works on any racer. Remaining: Eric, Kamil, Liliana, Justyna via Avaturn selfies, or photo-face bobble-heads as a fallback
 - Eric's truck/tractor transform with the real assets (swap the placeholder prefab in `TransformPower` asset)
 - Liliana's and Justyna's superpowers (new `SuperPowerDefinition` subclass + asset each)
 - Linux build target
