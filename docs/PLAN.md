@@ -202,6 +202,15 @@ Ranked; we stop wherever time runs out:
 - [ ] 6.3 A one-page "How to play" for the adults (start host, join, controls)
 - **DoD:** a 4-player race on the real hardware
 
+### Real-hardware test (Fri, PC + 3 laptops)
+Copy the whole `Builds/Dev` folder to each laptop (a fresh build first).
+1. **First launch:** Windows Firewall prompt → Allow (Private). Each laptop types its name on the title screen.
+2. **Discovery:** host on the PC; does the game appear under "Games on this Wi-Fi" on every laptop? (Fallback: Join IP, using the IP shown on the host.)
+3. **Lobby:** 4 players on the pedestals; browse with a pad and keyboard; everyone sees everyone's racer change live; ready → START turns green → START.
+4. **Race:** karts smooth on every screen, name tags, positions 1st–4th sensible, finish, results, Race Again, Lobby.
+5. **Crash test:** End task on one laptop mid-race → do the others keep racing, does that kart vanish within ~10 s, can it rejoin from the lobby?
+6. **Performance:** frame rate on the weakest laptop (note it down).
+
 ### MVP cut line ✂️
 If we fall behind, **Phases 0–3 + 4.1 (title) + a simple lobby (4.2–4.4 without the 3D stage polish) + 6** is a complete, playable birthday game. Everything else is bonus.
 
