@@ -18,6 +18,14 @@ description: Checklist for making any code, scene or prefab change in the Eric R
 - Networked prefabs: add them to the `NetworkPrefabs` list asset in `Assets/_EricRacer/Settings/`.
 - Karting Package patches: minimal, tagged `// ERIC-PATCH:`.
 
+## Gotchas learned in this project
+- `execute_code` uses the CodeDom compiler (C# 6): no local functions, no `is T x` patterns, and write `UnityEngine.Object` explicitly (plain `Object` is ambiguous).
+- `AssetDatabase.DeleteAsset(s)` is blocked in `execute_code`; use `manage_asset action=delete` (batched with `batch_execute`).
+- The editor is usually **unfocused** while I work, so Play Mode doesn't tick. Pause, then use `EditorApplication.Step()` in a loop inside `execute_code` to advance frames deterministically.
+- Simulated Input System devices don't reach actions while the editor is unfocused (separate editor/player input state). Test the logic by calling methods directly, and leave real controller tests to the user.
+- During a player build the MCP disconnects. Wait for `Build Finished` in `%LOCALAPPDATA%/Unity/Editor/Editor.log` instead of polling the build status.
+- Remove any test devices (`InputSystem.RemoveDevice`) before leaving Play Mode, because they persist in the editor.
+
 ## After (verification)
 1. Console: zero errors and no new warnings from our code.
 2. Enter Play Mode through the MCP and exercise the change (read logs or check a screenshot), then exit Play Mode.

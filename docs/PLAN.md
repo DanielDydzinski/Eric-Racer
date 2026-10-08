@@ -146,20 +146,20 @@ Every step ends with **a definition of done (DoD)** that I check through MCP: it
 
 ### Phase 0: Foundation (Thu evening, about 1.5 h)
 - [x] 0.1 ~~Linux Build Support~~ (deferred, Windows only for now)
-- [ ] 0.2 **You:** restart Claude Code so the Unity MCP tools load in this session (`/mcp` shows UnityMCP connected)
+- [x] 0.2 **You:** restart Claude Code so the Unity MCP tools load in this session (`/mcp` shows UnityMCP connected)
 - [x] 0.3 Move the git repo to the project root (done; `.gitignore` verified: Library, Temp, Logs, Builds, *.csproj, *.sln ignored) → baseline committed
-- [ ] 0.4 Remove bloat: the `ml-agents`, `barracuda`, `learn.iet-framework`, `visualscripting`, `collab-proxy` and `connect.share` packages; `ML-Agents/`, `Scripts/AI/`, `Tutorials/`, `TutorialInfo/`, `*_MLAgent` prefabs, `.nn` files and training scenes
-- [ ] 0.5 Install `com.unity.netcode.gameobjects` (2.x) and `com.unity.multiplayer.playmode`
-- [ ] 0.6 Create `_EricRacer/` folders and the asmdefs
-- [ ] 0.7 Player Settings: company and product name, Windows x64 Mono, fullscreen window, resizable, `Run In Background = true` (essential for netcode)
-- **DoD:** clean compile, MainScene opens, **a Windows build launches**
+- [x] 0.4 Remove bloat: the `ml-agents`, `barracuda`, `learn.iet-framework`, `visualscripting`, `collab-proxy` and `connect.share` packages; `ML-Agents/`, `Scripts/AI/`, `Tutorials/`, `TutorialInfo/`, `*_MLAgent` prefabs, `.nn` files and training scenes
+- [x] 0.5 Installed `com.unity.netcode.gameobjects` 2.13.3 (+ Unity Transport) and `com.unity.multiplayer.playmode` 2.0.2
+- [x] 0.6 Create `_EricRacer/` folders and the asmdefs
+- [x] 0.7 Player Settings: company and product name, Windows x64 Mono, fullscreen window, resizable, `Run In Background = true` (essential for netcode)
+- **DoD:** ✅ clean compile, Windows smoke build launches (Builds/Smoke)
 
 ### Phase 1: Drivable local kart (Fri morning, about 2 h)
-- [ ] 1.1 `KartInputActions` asset plus `InputSystemKartInput : BaseInput` (Strategy). Remove the legacy `Input` usages (A2). Reserve the **Power** (X / Space) and **Respawn** (Y / R) actions now
-- [ ] 1.2 `KartTuning` SO plus "Kid tuning" (slightly slower top speed, more grip, softer steering)
-- [ ] 1.3 `KartRespawner`: auto-respawn to the last checkpoint when flipped, fallen or stuck for 3 s, plus a button (R / gamepad Y)
-- [ ] 1.4 Cinemachine follow camera bound at runtime to the *local* kart
-- **DoD:** drive a lap of the Oval in the editor with keyboard **and** gamepad, fall off and respawn
+- [x] 1.1 `KartInputActions` asset plus `InputSystemKartInput : BaseInput` (Strategy). Remove the legacy `Input` usages (A2). Reserve the **Power** (X / Space) and **Respawn** (Y / R) actions now
+- [x] 1.2 `KartTuning` SO plus "Kid tuning" (slightly slower top speed, more grip, softer steering)
+- [x] 1.3 `KartRespawner`: auto-respawn to the last checkpoint when flipped, fallen or stuck for 3 s, plus a button (R / gamepad Y)
+- [x] 1.4 Cinemachine follow camera bound at runtime to the *local* kart
+- **DoD:** ✅ (auto-verified) tuning applied, camera follows, fall + flip respawn, zero console errors · ⏳ **you:** drive a lap of `Race_Oval` with keyboard and gamepad
 
 ### Phase 2: Networking MVP (Fri, about 4 h). The riskiest phase, so it goes first
 - [ ] 2.1 `NetworkKart` prefab (`NetworkObject`, owner-auth `NetworkTransform`, interpolation). Remote karts are kinematic with input disabled

@@ -1,0 +1,49 @@
+{
+    "name": "KartControls",
+    "maps": [
+        {
+            "name": "Kart",
+            "id": "7a1c2d10-0001-4e6b-9a10-000000000001",
+            "actions": [
+                { "name": "Steer", "type": "Value", "id": "7a1c2d10-0001-4e6b-9a10-000000000101", "expectedControlType": "Axis", "processors": "", "interactions": "", "initialStateCheck": true },
+                { "name": "Accelerate", "type": "Button", "id": "7a1c2d10-0001-4e6b-9a10-000000000102", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Brake", "type": "Button", "id": "7a1c2d10-0001-4e6b-9a10-000000000103", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Power", "type": "Button", "id": "7a1c2d10-0001-4e6b-9a10-000000000104", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Respawn", "type": "Button", "id": "7a1c2d10-0001-4e6b-9a10-000000000105", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Pause", "type": "Button", "id": "7a1c2d10-0001-4e6b-9a10-000000000106", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false }
+            ],
+            "bindings": [
+                { "name": "WASD", "id": "7a1c2d10-0001-4e6b-9a10-000000000201", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0001-4e6b-9a10-000000000202", "path": "<Keyboard>/a", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0001-4e6b-9a10-000000000203", "path": "<Keyboard>/d", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": true },
+                { "name": "Arrows", "id": "7a1c2d10-0001-4e6b-9a10-000000000204", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0001-4e6b-9a10-000000000205", "path": "<Keyboard>/leftArrow", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0001-4e6b-9a10-000000000206", "path": "<Keyboard>/rightArrow", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": true },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000207", "path": "<Gamepad>/leftStick/x", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": false },
+                { "name": "DPad", "id": "7a1c2d10-0001-4e6b-9a10-000000000208", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0001-4e6b-9a10-000000000209", "path": "<Gamepad>/dpad/left", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0001-4e6b-9a10-000000000210", "path": "<Gamepad>/dpad/right", "interactions": "", "processors": "", "groups": "", "action": "Steer", "isComposite": false, "isPartOfComposite": true },
+
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000301", "path": "<Keyboard>/w", "interactions": "", "processors": "", "groups": "", "action": "Accelerate", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000302", "path": "<Keyboard>/upArrow", "interactions": "", "processors": "", "groups": "", "action": "Accelerate", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000303", "path": "<Gamepad>/rightTrigger", "interactions": "", "processors": "", "groups": "", "action": "Accelerate", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000304", "path": "<Gamepad>/buttonSouth", "interactions": "", "processors": "", "groups": "", "action": "Accelerate", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000401", "path": "<Keyboard>/s", "interactions": "", "processors": "", "groups": "", "action": "Brake", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000402", "path": "<Keyboard>/downArrow", "interactions": "", "processors": "", "groups": "", "action": "Brake", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000403", "path": "<Gamepad>/leftTrigger", "interactions": "", "processors": "", "groups": "", "action": "Brake", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000404", "path": "<Gamepad>/buttonEast", "interactions": "", "processors": "", "groups": "", "action": "Brake", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000501", "path": "<Keyboard>/space", "interactions": "", "processors": "", "groups": "", "action": "Power", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000502", "path": "<Gamepad>/buttonWest", "interactions": "", "processors": "", "groups": "", "action": "Power", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000601", "path": "<Keyboard>/r", "interactions": "", "processors": "", "groups": "", "action": "Respawn", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000602", "path": "<Gamepad>/buttonNorth", "interactions": "", "processors": "", "groups": "", "action": "Respawn", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000701", "path": "<Keyboard>/escape", "interactions": "", "processors": "", "groups": "", "action": "Pause", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000702", "path": "<Gamepad>/start", "interactions": "", "processors": "", "groups": "", "action": "Pause", "isComposite": false, "isPartOfComposite": false }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

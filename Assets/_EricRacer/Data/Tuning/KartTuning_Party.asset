@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f53f96cb801c8458a2824c7c3839b6, type: 3}
+  m_Name: KartTuning_Party
+  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Kart.KartTuning
+  stats:
+    TopSpeed: 13
+    Acceleration: 7
+    ReverseSpeed: 10
+    ReverseAcceleration: 3
+    AccelerationCurve: 0.5
+    Braking: 18
+    CoastingDrag: 5
+    Grip: 0.98
+    Steer: 3.8
+    AddedGravity: 1
