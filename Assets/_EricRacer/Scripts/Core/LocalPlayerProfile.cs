@@ -7,6 +7,7 @@ namespace EricRacer.Core
     public static class LocalPlayerProfile
     {
         private const string k_NameKey = "player_name";
+        private const string k_CharacterKey = "player_character";
         public const int MaxNameLength = 16;
 
         public static string Name
@@ -24,6 +25,17 @@ namespace EricRacer.Core
                 if (trimmed.Length > MaxNameLength)
                     trimmed = trimmed.Substring(0, MaxNameLength);
                 PlayerPrefs.SetString(k_NameKey, trimmed);
+                PlayerPrefs.Save();
+            }
+        }
+
+        /// <summary>Last character picked, so everyone starts with "their" racer next time.</summary>
+        public static int CharacterIndex
+        {
+            get => LaunchOptions.CharacterIndex >= 0 ? LaunchOptions.CharacterIndex : PlayerPrefs.GetInt(k_CharacterKey, 0);
+            set
+            {
+                PlayerPrefs.SetInt(k_CharacterKey, value);
                 PlayerPrefs.Save();
             }
         }

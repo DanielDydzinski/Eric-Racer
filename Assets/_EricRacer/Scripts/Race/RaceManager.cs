@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EricRacer.Core;
+using EricRacer.Net;
 using EricRacer.Race.States;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace EricRacer.Race
         [SerializeField] private KartSpawner spawner;
         [SerializeField] private RaceRoster roster;
         [SerializeField] private RaceStateEventChannel stateChannel;
+        [SerializeField] private SessionRoster sessions;
+        [SerializeField] private RaceSetup setup;
 
         private readonly NetworkVariable<RaceStateId> m_State = new NetworkVariable<RaceStateId>();
         private readonly NetworkVariable<double> m_PhaseEndsAt = new NetworkVariable<double>();
@@ -58,7 +61,7 @@ namespace EricRacer.Race
             if (!IsServer)
                 return;
 
-            m_Laps.Value = LaunchOptions.Laps > 0 ? LaunchOptions.Laps : settings.Laps;
+            m_Laps.Value = LaunchOptions.Laps > 0 ? LaunchOptions.Laps : setup.Laps;
             spawner.KartSpawned += ServerRegister;
             NetworkManager.SceneManager.OnLoadEventCompleted += OnLoadEventCompleted;
 
@@ -69,8 +72,7 @@ namespace EricRacer.Race
             m_Machine.Add(RaceStateId.Results, new ResultsState(this));
             m_Machine.Changed += id => m_State.Value = id;
             m_Machine.ChangeTo(RaceStateId.Grid);
-
-            spawner.Begin(NetworkManager);
+            // Karts are spawned once every PC has loaded the track (OnLoadEventCompleted).
         }
 
         public override void OnNetworkDespawn()
@@ -103,14 +105,17 @@ namespace EricRacer.Race
 
         void OnLoadEventCompleted(string sceneName, LoadSceneMode mode, List<ulong> completed, List<ulong> timedOut)
         {
-            if (sceneName == gameObject.scene.name)
-                AllClientsLoaded = true;
+            if (sceneName != gameObject.scene.name || AllClientsLoaded)
+                return;
+            AllClientsLoaded = true;
+            spawner.Begin(NetworkManager);
         }
 
         void ServerRegister(NetworkObject kart, ulong clientId)
         {
-            // Phase 4 replaces this with the name each player typed.
-            kart.GetComponent<RaceProgress>().ServerBind(this, $"Player {clientId + 1}");
+            var session = sessions.Find(clientId);
+            string displayName = session != null && !string.IsNullOrWhiteSpace(session.PlayerName) ? session.PlayerName : $"Player {clientId + 1}";
+            kart.GetComponent<RaceProgress>().ServerBind(this, displayName);
         }
 
         // --- Called by states (server only) ---
@@ -182,6 +187,13 @@ namespace EricRacer.Race
         {
             if (IsServer && State == RaceStateId.Results)
                 NetworkManager.SceneManager.LoadScene(gameObject.scene.name, LoadSceneMode.Single);
+        }
+
+        /// <summary>Host only: everyone back to the lobby to pick new racers.</summary>
+        public void RequestLobby()
+        {
+            if (IsServer && State == RaceStateId.Results)
+                NetworkManager.SceneManager.LoadScene(settings.LobbyScene, LoadSceneMode.Single);
         }
     }
 }

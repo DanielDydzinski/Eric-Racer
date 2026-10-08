@@ -14,6 +14,7 @@ namespace EricRacer.Race
         [Tooltip("After the winner crosses the line, the others get this long before results.")]
         [SerializeField] private float finishTimeoutSeconds = 45f;
         [SerializeField] private float positionUpdateInterval = 0.2f;
+        [SerializeField] private string lobbyScene = "Lobby";
 
         public int Laps => laps;
         public float CountdownSeconds => countdownSeconds;
@@ -21,5 +22,6 @@ namespace EricRacer.Race
         public float MaxGridSeconds => maxGridSeconds;
         public float FinishTimeoutSeconds => finishTimeoutSeconds;
         public float PositionUpdateInterval => positionUpdateInterval;
+        public string LobbyScene => lobbyScene;
     }
 }

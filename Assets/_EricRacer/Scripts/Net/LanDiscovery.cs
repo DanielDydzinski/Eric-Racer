@@ -35,6 +35,7 @@ namespace EricRacer.Net
     /// </summary>
     public class LanDiscovery : MonoBehaviour
     {
+        [SerializeField] private LanDiscoveryAnchor anchor;
         [SerializeField] private ushort discoveryPort = 47777;
         [SerializeField] private float advertiseInterval = 1f;
         [SerializeField] private float hostTimeout = 3.5f;
@@ -50,6 +51,8 @@ namespace EricRacer.Net
         private UdpClient m_Listener;
         private Func<string> m_BuildAdvert;
         private float m_NextAdvertTime;
+
+        void Awake() => anchor.Provide(this);
 
         public bool IsAdvertising => m_Sender != null;
         public bool IsListening => m_Listener != null;
@@ -118,6 +121,7 @@ namespace EricRacer.Net
         {
             StopAdvertising();
             StopListening();
+            anchor.Release(this);
         }
 
         void SendAdvert()

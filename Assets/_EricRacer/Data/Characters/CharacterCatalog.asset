@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84559afa34429e748989a6944f86dad6, type: 3}
+  m_Name: CharacterCatalog
+  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Characters.CharacterCatalog
+  characters:
+  - {fileID: 11400000, guid: 769e3f8fa5a020c46bbf4383d31c4d63, type: 2}
+  - {fileID: 11400000, guid: 81e029c63ce632348a67597a517ba530, type: 2}
+  - {fileID: 11400000, guid: 2ed504b1576cfdd45bb14ab05fc91df8, type: 2}
+  - {fileID: 11400000, guid: 0d03a8b0da1c7c94888921914d60489c, type: 2}

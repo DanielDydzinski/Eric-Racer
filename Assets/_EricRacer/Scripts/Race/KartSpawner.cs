@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace EricRacer.Race
 {
@@ -51,7 +52,11 @@ namespace EricRacer.Race
 
             m_SlotByClient[clientId] = slot;
             Transform spot = gridSlots[slot];
-            var kart = kartPrefab.InstantiateAndSpawn(m_Network, clientId, destroyWithScene: true, position: spot.position, rotation: spot.rotation);
+            // Place the kart in the race scene explicitly: during a scene switch the "active" scene can still be the old one,
+            // and clients would never receive a kart that belongs to a scene they've already unloaded.
+            var kart = Instantiate(kartPrefab, spot.position, spot.rotation);
+            SceneManager.MoveGameObjectToScene(kart.gameObject, gameObject.scene);
+            kart.SpawnWithOwnership(clientId, destroyWithScene: true);
             KartSpawned?.Invoke(kart, clientId);
         }
 

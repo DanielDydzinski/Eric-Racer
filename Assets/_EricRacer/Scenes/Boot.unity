@@ -135,9 +135,9 @@ GameObject:
   - component: {fileID: 1474247048}
   - component: {fileID: 1474247047}
   - component: {fileID: 1474247046}
-  - component: {fileID: 1474247045}
   - component: {fileID: 1474247054}
   - component: {fileID: 1474247055}
+  - component: {fileID: 1474247056}
   m_Layer: 0
   m_Name: NetworkServices
   m_TagString: Untagged
@@ -145,21 +145,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1474247045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474247044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f26c297ec64fa894bb751c97d8f0d024, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.Dev.NetworkDebugPanel
-  connection: {fileID: 1474247050}
-  discovery: {fileID: 1474247049}
-  scale: 1.5
 --- !u!114 &1474247046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.SessionSceneFlow
   connection: {fileID: 1474247050}
   menuScene: MainMenu
-  sessionStartScene: Race_Oval
+  sessionStartScene: Lobby
 --- !u!114 &1474247048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76156b1671c88e84e90251502fa442d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.LanDiscovery
+  anchor: {fileID: 11400000, guid: 984f18c0bb341a34789816c3b2d4ba1c, type: 2}
   discoveryPort: 47777
   advertiseInterval: 1
   hostTimeout: 3.5
@@ -229,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf48e0c901d62b14c8fba3f9d94ee8da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.ConnectionManager
+  anchor: {fileID: 11400000, guid: 1ccb0aa4a38276941919e2fbf8a2e35b, type: 2}
   port: 7777
   maxPlayers: 4
   tickRate: 60
@@ -280,7 +267,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1474247051}
-    PlayerPrefab: {fileID: 0}
+    PlayerPrefab: {fileID: 3642702390288438322, guid: d5e6f2f6492761f40be708cfd62d33f5, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 34f0931ab9ec3f64a8913b63372a92f9, type: 2}
@@ -348,6 +335,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.RaceJoinGate
   connection: {fileID: 1474247050}
   raceState: {fileID: 11400000, guid: 0e570ed5fa1a75d4cbefa32ddde43e66, type: 2}
+--- !u!114 &1474247056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474247044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75197f4b1fbf46b44930c04d505b12e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Dev.DevScreenshot
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

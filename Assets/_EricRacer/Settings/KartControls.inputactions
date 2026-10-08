@@ -43,6 +43,49 @@
                 { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000701", "path": "<Keyboard>/escape", "interactions": "", "processors": "", "groups": "", "action": "Pause", "isComposite": false, "isPartOfComposite": false },
                 { "name": "", "id": "7a1c2d10-0001-4e6b-9a10-000000000702", "path": "<Gamepad>/start", "interactions": "", "processors": "", "groups": "", "action": "Pause", "isComposite": false, "isPartOfComposite": false }
             ]
+        },
+        {
+            "name": "Lobby",
+            "id": "7a1c2d10-0002-4e6b-9a10-000000000001",
+            "actions": [
+                { "name": "Browse", "type": "Value", "id": "7a1c2d10-0002-4e6b-9a10-000000000101", "expectedControlType": "Axis", "processors": "", "interactions": "", "initialStateCheck": true },
+                { "name": "Ready", "type": "Button", "id": "7a1c2d10-0002-4e6b-9a10-000000000102", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Unready", "type": "Button", "id": "7a1c2d10-0002-4e6b-9a10-000000000103", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "HostLaps", "type": "Value", "id": "7a1c2d10-0002-4e6b-9a10-000000000104", "expectedControlType": "Axis", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "HostStart", "type": "Button", "id": "7a1c2d10-0002-4e6b-9a10-000000000105", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Menu", "type": "Button", "id": "7a1c2d10-0002-4e6b-9a10-000000000106", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false }
+            ],
+            "bindings": [
+                { "name": "Arrows", "id": "7a1c2d10-0002-4e6b-9a10-000000000201", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0002-4e6b-9a10-000000000202", "path": "<Keyboard>/leftArrow", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0002-4e6b-9a10-000000000203", "path": "<Keyboard>/rightArrow", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": true },
+                { "name": "AD", "id": "7a1c2d10-0002-4e6b-9a10-000000000204", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0002-4e6b-9a10-000000000205", "path": "<Keyboard>/a", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0002-4e6b-9a10-000000000206", "path": "<Keyboard>/d", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": true },
+                { "name": "DPad", "id": "7a1c2d10-0002-4e6b-9a10-000000000207", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0002-4e6b-9a10-000000000208", "path": "<Gamepad>/dpad/left", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0002-4e6b-9a10-000000000209", "path": "<Gamepad>/dpad/right", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": true },
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000210", "path": "<Gamepad>/leftStick/x", "interactions": "", "processors": "", "groups": "", "action": "Browse", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000301", "path": "<Gamepad>/buttonSouth", "interactions": "", "processors": "", "groups": "", "action": "Ready", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000302", "path": "<Keyboard>/space", "interactions": "", "processors": "", "groups": "", "action": "Ready", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000401", "path": "<Gamepad>/buttonEast", "interactions": "", "processors": "", "groups": "", "action": "Unready", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000402", "path": "<Keyboard>/backspace", "interactions": "", "processors": "", "groups": "", "action": "Unready", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "Shoulders", "id": "7a1c2d10-0002-4e6b-9a10-000000000501", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "HostLaps", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0002-4e6b-9a10-000000000502", "path": "<Gamepad>/leftShoulder", "interactions": "", "processors": "", "groups": "", "action": "HostLaps", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0002-4e6b-9a10-000000000503", "path": "<Gamepad>/rightShoulder", "interactions": "", "processors": "", "groups": "", "action": "HostLaps", "isComposite": false, "isPartOfComposite": true },
+                { "name": "QE", "id": "7a1c2d10-0002-4e6b-9a10-000000000504", "path": "1DAxis", "interactions": "", "processors": "", "groups": "", "action": "HostLaps", "isComposite": true, "isPartOfComposite": false },
+                { "name": "negative", "id": "7a1c2d10-0002-4e6b-9a10-000000000505", "path": "<Keyboard>/q", "interactions": "", "processors": "", "groups": "", "action": "HostLaps", "isComposite": false, "isPartOfComposite": true },
+                { "name": "positive", "id": "7a1c2d10-0002-4e6b-9a10-000000000506", "path": "<Keyboard>/e", "interactions": "", "processors": "", "groups": "", "action": "HostLaps", "isComposite": false, "isPartOfComposite": true },
+
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000601", "path": "<Gamepad>/start", "interactions": "", "processors": "", "groups": "", "action": "HostStart", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000602", "path": "<Keyboard>/enter", "interactions": "", "processors": "", "groups": "", "action": "HostStart", "isComposite": false, "isPartOfComposite": false },
+
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000701", "path": "<Keyboard>/escape", "interactions": "", "processors": "", "groups": "", "action": "Menu", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "7a1c2d10-0002-4e6b-9a10-000000000702", "path": "<Gamepad>/select", "interactions": "", "processors": "", "groups": "", "action": "Menu", "isComposite": false, "isPartOfComposite": false }
+            ]
         }
     ],
     "controlSchemes": []

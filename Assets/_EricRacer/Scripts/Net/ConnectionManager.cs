@@ -12,6 +12,7 @@ namespace EricRacer.Net
     [RequireComponent(typeof(NetworkManager), typeof(UnityTransport))]
     public class ConnectionManager : MonoBehaviour
     {
+        [SerializeField] private ConnectionManagerAnchor anchor;
         [SerializeField] private ushort port = 7777;
         [SerializeField] private int maxPlayers = 4;
         [SerializeField] private int tickRate = 60;
@@ -40,7 +41,10 @@ namespace EricRacer.Net
             m_Network.NetworkConfig.TickRate = (uint)tickRate;
             m_Transport.DisconnectTimeoutMS = disconnectTimeoutMs;
             m_Network.ConnectionApprovalCallback = ApproveConnection;
+            anchor.Provide(this);
         }
+
+        void OnDestroy() => anchor.Release(this);
 
         void OnEnable()
         {
@@ -108,7 +112,8 @@ namespace EricRacer.Net
 
         void ApproveConnection(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
-            response.CreatePlayerObject = false;
+            // Each player gets a PlayerSession (the NetworkManager's player prefab).
+            response.CreatePlayerObject = true;
 
             if (request.ClientNetworkId == NetworkManager.ServerClientId)
             {

@@ -23,4 +23,6 @@ LAN multiplayer kart racer (Unity 6000.3.6f1, URP, Netcode for GameObjects) buil
 - Use the Unity MCP to edit scenes and prefabs, refresh, check compilation and read the console. Follow the `unity-change` skill.
 - **Git:** never commit or push unless the user explicitly asks. Commit as the user, with **no** Claude co-author or "Generated with" lines.
 - Target platform: Windows x64 (Mono) for now. Linux comes later, so avoid Windows-only APIs.
-- Characters must be addable as data only (`CharacterDefinition` + `ICharacterView`). The user will import family models from Pinoc later.
+- Characters must be addable as data only: a Humanoid prefab with `CharacterView` + a `CharacterDefinition` in the `CharacterCatalog`. The user will import family models from Pinoc later.
+- Scene UI reaches persistent services (ConnectionManager, LanDiscovery) through `RuntimeAnchor` assets in `Data/Anchors`, never by searching.
+- Run `EricRacer.Editor.ReferenceValidator.Validate()` after wiring references; it must come back empty before any build.

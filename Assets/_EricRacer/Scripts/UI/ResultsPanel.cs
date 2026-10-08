@@ -14,12 +14,17 @@ namespace EricRacer.UI
         [SerializeField] private RaceManager race;
         [SerializeField] private TMP_Text[] rows;
         [SerializeField] private Button raceAgainButton;
+        [SerializeField] private Button lobbyButton;
         [SerializeField] private TMP_Text waitingText;
 
         private readonly List<RaceProgress> m_Sorted = new List<RaceProgress>();
         private readonly List<RaceProgress> m_Watched = new List<RaceProgress>();
 
-        void Awake() => raceAgainButton.onClick.AddListener(race.RequestRestart);
+        void Awake()
+        {
+            raceAgainButton.onClick.AddListener(race.RequestRestart);
+            lobbyButton.onClick.AddListener(race.RequestLobby);
+        }
 
         void OnEnable()
         {
@@ -28,6 +33,7 @@ namespace EricRacer.UI
 
             bool isHost = NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer;
             raceAgainButton.gameObject.SetActive(isHost);
+            lobbyButton.gameObject.SetActive(isHost);
             waitingText.gameObject.SetActive(!isHost);
             if (isHost && EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(raceAgainButton.gameObject);

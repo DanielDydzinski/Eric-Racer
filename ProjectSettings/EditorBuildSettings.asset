@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/_EricRacer/Scenes/MainMenu.unity
     guid: 600fcbe404323e84ca547e1bf8508668
   - enabled: 1
+    path: Assets/_EricRacer/Scenes/Lobby.unity
+    guid: e1949a8f9915c33429942130aa11e126
+  - enabled: 1
     path: Assets/_EricRacer/Scenes/Race_Oval.unity
     guid: a22af345f169f3943aaa98eedf445d71
   m_configObjects: {}
