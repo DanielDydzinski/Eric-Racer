@@ -162,12 +162,12 @@ Every step ends with **a definition of done (DoD)** that I check through MCP: it
 - **DoD:** ✅ (auto-verified) tuning applied, camera follows, fall + flip respawn, zero console errors · ⏳ **you:** drive a lap of `Race_Oval` with keyboard and gamepad
 
 ### Phase 2: Networking MVP (Fri, about 4 h). The riskiest phase, so it goes first
-- [ ] 2.1 `NetworkKart` prefab (`NetworkObject`, owner-auth `NetworkTransform`, interpolation). Remote karts are kinematic with input disabled
-- [ ] 2.2 `ConnectionManager` (state machine): Host / Join(ip) / Leave, connection approval (max 4, reject mid-race joins)
-- [ ] 2.3 `LanDiscovery`: the host broadcasts and clients list the hosts they find
-- [ ] 2.4 Spawn karts on grid slots (`TrackLayout.spawnPoints`), one per client
-- [ ] 2.5 **Skill:** `mp-test` (how I run a 2–4 player test via Multiplayer Play Mode and local builds)
-- **DoD:** 2 local builds plus the editor: 3 karts drive together smoothly, quitting a client doesn't break the host. **Then a real test: PC plus one laptop over Wi-Fi**
+- [x] 2.1 `NetworkKart` prefab (`NetworkObject`, owner-auth `NetworkTransform`, interpolation). Remote karts are kinematic with input disabled
+- [x] 2.2 `ConnectionManager` (state machine): Host / Join(ip) / Leave, connection approval (max 4, reject mid-race joins)
+- [x] 2.3 `LanDiscovery`: the host broadcasts and clients list the hosts they find
+- [x] 2.4 Spawn karts on grid slots (`TrackLayout.spawnPoints`), one per client
+- [x] 2.5 **Skill:** `mp-test` (how I run a 2–4 player test via Multiplayer Play Mode and local builds)
+- **DoD:** ✅ 3 local windows (host + 2 clients, auto-drive): all see all 3 karts, positions agree, grid slots correct, closing a client normally is clean · ⚠️ killing a client stalls the host on loopback (see Risks) · ⏳ **you (Fri):** real test PC + laptop over Wi-Fi incl. Task Manager crash test
 
 ### Phase 3: Race loop (Sat morning, about 4 h)
 - [ ] 3.1 `Checkpoint` and `TrackLayout` (ordered checkpoints, finish line, spawn grid), reusing the positions of the existing `LapObject`s
@@ -219,6 +219,7 @@ If we fall behind, **Phases 0–3 + 4.1 (title) + a simple lobby (4.2–4.4 with
 |------|-----------|
 | Guest Wi-Fi or "client isolation" blocks LAN discovery | Manual IP join fallback. Ideally everyone is on the main Wi-Fi, or a phone hotspot as plan C |
 | Windows Firewall blocks the host | Test in Phase 2. Click *Allow* on first launch (private network) |
+| **A crashed/killed game stalls the host for everyone** (found Phase 2) | Reproduced on one PC: after a client process is *killed*, the host stops receiving from all clients until they time out. This is the Windows UDP "port unreachable / connection reset" behaviour, not handled by Unity Transport 2.6.0. Closing a window normally is fine. Mitigation: disconnect timeout lowered to 10 s. Expected not to happen between real PCs (Windows Firewall stealth mode suppresses the ICMP reply), **verify in the real-hardware test** by ending a laptop's game in Task Manager mid-race |
 | Weak laptop GPUs | Quality presets, Low as the default on laptops; test a build on the weakest laptop on Friday |
 | Owner-auth physics looks jittery for remote karts | NetworkTransform interpolation plus a higher tick rate (60) on the LAN |
 | Scope creep | MVP cut line. Phase 5 is strictly ranked and timeboxed |

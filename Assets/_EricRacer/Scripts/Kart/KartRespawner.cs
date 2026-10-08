@@ -37,8 +37,10 @@ namespace EricRacer.Kart
         {
             m_Kart = GetComponent<ArcadeKart>();
             m_Body = GetComponent<Rigidbody>();
-            RecordSafePose(new Pose(transform.position, transform.rotation));
         }
+
+        // Start, not Awake: a networked kart is moved onto its grid slot after Awake.
+        void Start() => RecordSafePose(new Pose(transform.position, transform.rotation));
 
         void OnEnable()
         {

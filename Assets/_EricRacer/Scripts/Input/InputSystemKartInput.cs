@@ -23,9 +23,6 @@ namespace EricRacer.Input
 
         public override InputData GenerateInput()
         {
-            if (!enabled)
-                return default;
-
             return new InputData
             {
                 TurnInput = Mathf.Clamp(steer.action.ReadValue<float>(), -1f, 1f),

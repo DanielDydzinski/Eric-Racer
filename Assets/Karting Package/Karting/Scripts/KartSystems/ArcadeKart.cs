@@ -330,6 +330,10 @@ namespace KartGame.KartSystems
             // gather nonzero input from our sources
             for (int i = 0; i < m_Inputs.Length; i++)
             {
+                // ERIC-PATCH: skip disabled input strategies so they can be swapped by enabling/disabling components.
+                if (m_Inputs[i] is Behaviour behaviour && !behaviour.enabled)
+                    continue;
+
                 Input = m_Inputs[i].GenerateInput();
                 WantsToDrift = Input.Brake && Vector3.Dot(Rigidbody.linearVelocity, transform.forward) > 0.0f;
             }
