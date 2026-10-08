@@ -17,10 +17,10 @@ Get-ChildItem $logDir -Filter *.log -ErrorAction SilentlyContinue | Remove-Item
 $common = @("-screen-fullscreen", "0", "-screen-width", "640", "-screen-height", "360", "-autodrive", "-netlog", "-laps", "$Laps")
 $procs = @()
 # Paths contain spaces ("Unity projects"), so the log path must be quoted inside the argument.
-$procs += Start-Process $exe -PassThru -ArgumentList ($common + @("-host", "-players", "$($Clients + 1)", "-name", "Host", "-logFile", "`"$(Join-Path $logDir 'host.log')`""))
+$procs += Start-Process $exe -PassThru -ArgumentList ($common + @("-host", "-players", "$($Clients + 1)", "-name", "Host", "-character", "1", "-logFile", "`"$(Join-Path $logDir 'host.log')`""))
 Start-Sleep -Seconds 4
 for ($i = 1; $i -le $Clients; $i++) {
-    $procs += Start-Process $exe -PassThru -ArgumentList ($common + @("-join", "127.0.0.1", "-name", "Client$i", "-logFile", "`"$(Join-Path $logDir "client$i.log")`""))
+    $procs += Start-Process $exe -PassThru -ArgumentList ($common + @("-join", "127.0.0.1", "-name", "Client$i", "-character", "$(($i + 1) % 4)", "-logFile", "`"$(Join-Path $logDir "client$i.log")`""))
     Start-Sleep -Seconds 1
 }
 
@@ -30,6 +30,6 @@ Start-Sleep -Seconds 1
 
 foreach ($log in Get-ChildItem $logDir -Filter *.log) {
     Write-Output "===== $($log.Name) ====="
-    Select-String -Path $log.FullName -Pattern "\[Connection\]|\[Race\]|Exception|Error|\[Netcode\]" | ForEach-Object { $_.Line }
+    Select-String -Path $log.FullName -Pattern "\[Connection\]|\[Lobby\]|\[Race\]|Exception|Error|\[Netcode\]" | ForEach-Object { $_.Line }
     Select-String -Path $log.FullName -Pattern "\[NetSync\]" | Select-Object -Last 2 | ForEach-Object { $_.Line }
 }

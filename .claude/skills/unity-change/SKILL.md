@@ -32,6 +32,7 @@ description: Checklist for making any code, scene or prefab change in the Eric R
 
 ## After (verification)
 1. Console: zero errors and no new warnings from our code.
+1b. After wiring references with `execute_code`, run `EricRacer.Editor.ReferenceValidator.Validate()` (menu: Eric Racer/Validate References). References assigned in the same call that creates assets, or right after an input-actions reimport, have silently come out empty twice. **It must return an empty list before a build.**
 2. Enter Play Mode through the MCP and exercise the change (read logs or check a screenshot), then exit Play Mode.
 3. For a multiplayer change, also follow the `mp-test` skill once it exists (Phase 2).
 4. Tick the step in `docs/PLAN.md`.

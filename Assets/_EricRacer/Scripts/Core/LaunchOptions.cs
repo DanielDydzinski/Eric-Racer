@@ -17,6 +17,10 @@ namespace EricRacer.Core
         public static int Laps { get; }
         /// <summary>Test runs: the grid waits for this many players before the countdown (the lobby does this for real games).</summary>
         public static int ExpectedPlayers { get; }
+        /// <summary>Test runs: start with this character instead of the saved one (-1 = not set).</summary>
+        public static int CharacterIndex { get; } = -1;
+        /// <summary>Test runs: save a screenshot after this many seconds (0 = off).</summary>
+        public static float ScreenshotAfterSeconds { get; }
 
         static LaunchOptions()
         {
@@ -33,6 +37,8 @@ namespace EricRacer.Core
                     case "-netlog": NetLog = true; break;
                     case "-laps": Laps = int.TryParse(next, out int laps) ? laps : 0; break;
                     case "-players": ExpectedPlayers = int.TryParse(next, out int players) ? players : 0; break;
+                    case "-character": CharacterIndex = int.TryParse(next, out int character) ? character : -1; break;
+                    case "-screenshot": ScreenshotAfterSeconds = float.TryParse(next, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float seconds) ? seconds : 0f; break;
                 }
             }
         }
