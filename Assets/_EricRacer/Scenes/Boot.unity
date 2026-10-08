@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 1474247046}
   - component: {fileID: 1474247045}
   - component: {fileID: 1474247054}
+  - component: {fileID: 1474247055}
   m_Layer: 0
   m_Name: NetworkServices
   m_TagString: Untagged
@@ -231,6 +232,7 @@ MonoBehaviour:
   port: 7777
   maxPlayers: 4
   tickRate: 60
+  disconnectTimeoutMs: 10000
 --- !u!114 &1474247051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +334,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.Dev.NetSyncProbe
   interval: 2
+--- !u!114 &1474247055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474247044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2db2b2c6219b0449efdd55b2c9e324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Net.RaceJoinGate
+  connection: {fileID: 1474247050}
+  raceState: {fileID: 11400000, guid: 0e570ed5fa1a75d4cbefa32ddde43e66, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

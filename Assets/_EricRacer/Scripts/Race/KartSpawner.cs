@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,31 +11,31 @@ namespace EricRacer.Race
         [SerializeField] private NetworkObject kartPrefab;
         [SerializeField] private Transform[] gridSlots;
 
+        public event Action<NetworkObject, ulong> KartSpawned;
+
         private readonly Dictionary<ulong, int> m_SlotByClient = new Dictionary<ulong, int>();
         private NetworkManager m_Network;
 
-        void Start()
+        /// <summary>Spawns karts for everyone connected now and for anyone who joins later, until <see cref="End"/>.</summary>
+        public void Begin(NetworkManager network)
         {
-            m_Network = NetworkManager.Singleton;
-            if (m_Network == null || !m_Network.IsServer)
-            {
-                enabled = false;
-                return;
-            }
-
+            m_Network = network;
             m_Network.OnClientConnectedCallback += SpawnFor;
             m_Network.OnClientDisconnectCallback += FreeSlot;
             foreach (ulong clientId in m_Network.ConnectedClientsIds)
                 SpawnFor(clientId);
         }
 
-        void OnDestroy()
+        public void End()
         {
             if (m_Network == null)
                 return;
             m_Network.OnClientConnectedCallback -= SpawnFor;
             m_Network.OnClientDisconnectCallback -= FreeSlot;
+            m_Network = null;
         }
+
+        void OnDestroy() => End();
 
         void SpawnFor(ulong clientId)
         {
@@ -50,7 +51,8 @@ namespace EricRacer.Race
 
             m_SlotByClient[clientId] = slot;
             Transform spot = gridSlots[slot];
-            kartPrefab.InstantiateAndSpawn(m_Network, clientId, destroyWithScene: true, position: spot.position, rotation: spot.rotation);
+            var kart = kartPrefab.InstantiateAndSpawn(m_Network, clientId, destroyWithScene: true, position: spot.position, rotation: spot.rotation);
+            KartSpawned?.Invoke(kart, clientId);
         }
 
         // The kart itself is despawned by Netcode when its owner disconnects.

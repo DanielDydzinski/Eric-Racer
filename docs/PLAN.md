@@ -170,12 +170,12 @@ Every step ends with **a definition of done (DoD)** that I check through MCP: it
 - **DoD:** ✅ 3 local windows (host + 2 clients, auto-drive): all see all 3 karts, positions agree, grid slots correct, closing a client normally is clean · ⚠️ killing a client stalls the host on loopback (see Risks) · ⏳ **you (Fri):** real test PC + laptop over Wi-Fi incl. Task Manager crash test
 
 ### Phase 3: Race loop (Sat morning, about 4 h)
-- [ ] 3.1 `Checkpoint` and `TrackLayout` (ordered checkpoints, finish line, spawn grid), reusing the positions of the existing `LapObject`s
-- [ ] 3.2 `RaceProgress` (per-kart NetworkVariables) and server validation
-- [ ] 3.3 `RaceStateMachine` + states: Lobby (all ready) → Countdown (synced to `ServerTime`, reusing `RaceStart.playable`) → Racing → Results
-- [ ] 3.4 Live positions (1st, 2nd and so on), finish detection, results, "Race again" back to Lobby without reconnecting
-- [ ] 3.5 Delete the old `GameFlowManager`/`Objective`/`TimeDisplay` usage from our race scenes
-- **DoD:** a 3-player race from countdown to podium to rematch, twice in a row, with no console errors
+- [x] 3.1 `Checkpoint` and `TrackLayout` (ordered checkpoints, finish line, spawn grid), reusing the positions of the existing `LapObject`s
+- [x] 3.2 `RaceProgress` (per-kart NetworkVariables) and server validation
+- [x] 3.3 `RaceStateMachine` + states: Lobby (all ready) → Countdown (synced to `ServerTime`, reusing `RaceStart.playable`) → Racing → Results
+- [x] 3.4 Live positions (1st, 2nd and so on), finish detection, results, "Race again" back to Lobby without reconnecting
+- [x] 3.5 Delete the old `GameFlowManager`/`Objective`/`TimeDisplay` usage from our race scenes
+- **DoD:** ✅ editor: grid→countdown→GO unlock, wrong-gate ignored, 3 laps, finish, results, race again · ✅ 3 windows: grid waits for all, synced countdown, client finish validated by server · ⏳ **you:** play a 3-lap race in the editor with a gamepad
 
 ### Phase 4: Title, 3D Lobby and HUD (Sat afternoon, about 4 h)
 - [ ] 4.1 **"Happy Birthday Eric!" title screen**: a 3D scene with a kart slowly spinning, a big title, balloons/confetti, then **Host** / **Join** (auto-list of found games) / name entry. Fully gamepad-navigable (Input System UI module)

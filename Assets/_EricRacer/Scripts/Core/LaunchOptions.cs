@@ -4,7 +4,7 @@ namespace EricRacer.Core
 {
     /// <summary>
     /// Command line switches for testing several game windows on one PC:
-    /// <c>-host</c>, <c>-join 127.0.0.1</c>, <c>-name Kamil</c>, <c>-autodrive</c>, <c>-netlog</c>.
+    /// <c>-host</c>, <c>-join 127.0.0.1</c>, <c>-name Kamil</c>, <c>-autodrive</c>, <c>-netlog</c>, <c>-laps 1</c>, <c>-players 3</c>.
     /// </summary>
     public static class LaunchOptions
     {
@@ -13,6 +13,10 @@ namespace EricRacer.Core
         public static string PlayerName { get; }
         public static bool AutoDrive { get; }
         public static bool NetLog { get; }
+        /// <summary>Overrides the lap count for quick tests; 0 means use the race settings.</summary>
+        public static int Laps { get; }
+        /// <summary>Test runs: the grid waits for this many players before the countdown (the lobby does this for real games).</summary>
+        public static int ExpectedPlayers { get; }
 
         static LaunchOptions()
         {
@@ -27,6 +31,8 @@ namespace EricRacer.Core
                     case "-name": PlayerName = next; break;
                     case "-autodrive": AutoDrive = true; break;
                     case "-netlog": NetLog = true; break;
+                    case "-laps": Laps = int.TryParse(next, out int laps) ? laps : 0; break;
+                    case "-players": ExpectedPlayers = int.TryParse(next, out int players) ? players : 0; break;
                 }
             }
         }

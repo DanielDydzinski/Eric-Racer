@@ -84,6 +84,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4810912518991602691, guid: 19954de30401f73428254541a9ad156e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3903085416733523281}
+    - targetCorrespondingSourceObject: {fileID: 4810912518991602691, guid: 19954de30401f73428254541a9ad156e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3940507892470655172}
+    - targetCorrespondingSourceObject: {fileID: 4810912518991602691, guid: 19954de30401f73428254541a9ad156e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1843775656057939439}
   m_SourcePrefab: {fileID: 100100000, guid: 19954de30401f73428254541a9ad156e, type: 3}
 --- !u!114 &160911867903314809 stripped
 MonoBehaviour:
@@ -285,4 +291,32 @@ MonoBehaviour:
   - {fileID: 5739684374419448220}
   - {fileID: 160911867903314809}
   - {fileID: 7429629610619205124}
+  - {fileID: 1843775656057939439}
   announcer: {fileID: 2691999060402047573}
+--- !u!114 &3940507892470655172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160911867903314812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b463f9b30922f64f855a25061bde616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Race.RaceProgress
+  ShowTopMostFoldoutHeaderGroup: 1
+  roster: {fileID: 11400000, guid: 18771aabd539a2e4f9a9d508a03cfa4b, type: 2}
+--- !u!114 &1843775656057939439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160911867903314812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691561082ce51864fb68a0d1f70ec0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EricRacer.Runtime::EricRacer.Race.KartRaceGate
+  raceState: {fileID: 11400000, guid: 0e570ed5fa1a75d4cbefa32ddde43e66, type: 2}

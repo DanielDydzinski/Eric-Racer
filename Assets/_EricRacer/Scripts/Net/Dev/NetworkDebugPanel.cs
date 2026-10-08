@@ -21,7 +21,12 @@ namespace EricRacer.Net.Dev
         void OnGUI()
         {
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
-            GUILayout.BeginArea(new Rect(10, 10, 340, Screen.height / scale - 20), GUI.skin.box);
+            // Full panel in the menu; a small strip in the bottom-left corner once in a game, clear of the race HUD.
+            float height = Screen.height / scale;
+            Rect area = connection.State == ConnectionState.Offline
+                ? new Rect(10, 10, 340, height - 20)
+                : new Rect(10, height - 130, 340, 120);
+            GUILayout.BeginArea(area, GUI.skin.box);
 
             GUILayout.Label($"<b>Eric Racer</b> · {connection.State}", new GUIStyle(GUI.skin.label) { richText = true });
 

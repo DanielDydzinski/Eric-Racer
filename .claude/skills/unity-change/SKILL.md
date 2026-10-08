@@ -24,6 +24,10 @@ description: Checklist for making any code, scene or prefab change in the Eric R
 - The editor is usually **unfocused** while I work, so Play Mode doesn't tick. Pause, then use `EditorApplication.Step()` in a loop inside `execute_code` to advance frames deterministically.
 - Simulated Input System devices don't reach actions while the editor is unfocused (separate editor/player input state). Test the logic by calling methods directly, and leave real controller tests to the user.
 - During a player build the MCP disconnects. Wait for `Build Finished` in `%LOCALAPPDATA%/Unity/Editor/Editor.log` instead of polling the build status.
+- Right after `manage_editor play`, the first `execute_code` often returns `success:false` with no message (domain reload). Just retry it.
+- When frame-stepping, put scene loads (StartHost, LoadScene) in their own `execute_code` call and step in the next one.
+- Triggers only fire if the kart actually **overlaps** them during a physics step. When teleporting through a gate, place the kart inside it and step a few frames.
+- "JobTempAlloc ... older than 4 frames" warnings come from pausing and stepping, not from game code.
 - Remove any test devices (`InputSystem.RemoveDevice`) before leaving Play Mode, because they persist in the editor.
 
 ## After (verification)
