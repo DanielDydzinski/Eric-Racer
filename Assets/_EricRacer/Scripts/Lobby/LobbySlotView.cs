@@ -22,7 +22,17 @@ namespace EricRacer.Lobby
         [SerializeField] private Color readyLight = new Color(0.3f, 1f, 0.35f);
         [SerializeField] private float popScale = 1.25f;
 
+        [Header("Browse arrows (only on this PC's own pedestal, until ready)")]
+        [SerializeField] private Transform leftArrow;
+        [SerializeField] private Transform rightArrow;
+        [SerializeField] private float arrowPopScale = 1.6f;
+        [SerializeField] private float arrowBobHeight = 0.08f;
+
         private PlayerSession m_Session;
+        private float m_LeftPop;
+        private float m_RightPop;
+        private Vector3 m_LeftRest;
+        private Vector3 m_RightRest;
         private bool m_Bound;
         private int m_ShownCharacter = -1;
         private bool m_ShownReady;
@@ -33,15 +43,35 @@ namespace EricRacer.Lobby
             if (m_Bound && session == m_Session)
                 return;
             if (m_Session != null)
+            {
                 m_Session.Changed -= Refresh;
+                m_Session.Browsed -= OnBrowsed;
+            }
 
             m_Bound = true;
             m_Session = session;
             m_ShownCharacter = -1;
             m_ShownReady = false;
             if (m_Session != null)
+            {
                 m_Session.Changed += Refresh;
+                m_Session.Browsed += OnBrowsed;
+            }
             Refresh();
+        }
+
+        void Awake()
+        {
+            m_LeftRest = leftArrow.localPosition;
+            m_RightRest = rightArrow.localPosition;
+        }
+
+        void OnBrowsed(int step)
+        {
+            if (step < 0)
+                m_LeftPop = 1f;
+            else
+                m_RightPop = 1f;
         }
 
         void OnDestroy() => Bind(null);
@@ -50,6 +80,9 @@ namespace EricRacer.Lobby
         {
             bool occupied = m_Session != null;
             kart.gameObject.SetActive(occupied);
+            bool showArrows = occupied && m_Session.IsOwner && !m_Session.IsReady;
+            leftArrow.gameObject.SetActive(showArrows);
+            rightArrow.gameObject.SetActive(showArrows);
             if (!occupied)
             {
                 nameText.text = string.Empty;
@@ -93,6 +126,22 @@ namespace EricRacer.Lobby
             m_Pop = Mathf.MoveTowards(m_Pop, 0f, Time.deltaTime * 4f);
             float scale = 1f + (popScale - 1f) * Mathf.Sin(m_Pop * Mathf.PI);
             turntable.localScale = Vector3.one * scale;
+
+            if (leftArrow.gameObject.activeSelf)
+            {
+                AnimateArrow(leftArrow, m_LeftRest, ref m_LeftPop, -1f);
+                AnimateArrow(rightArrow, m_RightRest, ref m_RightPop, 1f);
+            }
+        }
+
+        // Gentle bob while waiting; a pop outwards when the player browses that way.
+        void AnimateArrow(Transform arrow, Vector3 rest, ref float pop, float side)
+        {
+            pop = Mathf.MoveTowards(pop, 0f, Time.deltaTime * 4f);
+            float punch = Mathf.Sin(pop * Mathf.PI);
+            float bob = Mathf.Sin(Time.time * 3f) * arrowBobHeight;
+            arrow.localPosition = rest + new Vector3(side * punch * 0.25f, bob, 0f);
+            arrow.localScale = Vector3.one * (1f + (arrowPopScale - 1f) * punch);
         }
     }
 }

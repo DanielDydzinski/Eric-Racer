@@ -26,6 +26,9 @@ namespace EricRacer.Net
 
         public event Action Changed;
 
+        /// <summary>Owner only: the player flicked left (-1) or right (+1) through the racers.</summary>
+        public event Action<int> Browsed;
+
         public string PlayerName => m_Name.Value.ToString();
         public int CharacterIndex => m_Character.Value;
         public CharacterDefinition Character => catalog.Get(m_Character.Value);
@@ -68,6 +71,7 @@ namespace EricRacer.Net
             int next = catalog.Wrap(CharacterIndex + step);
             m_Character.Value = (byte)next;
             LocalPlayerProfile.CharacterIndex = next;
+            Browsed?.Invoke(step);
         }
 
         public void SetReady(bool ready)

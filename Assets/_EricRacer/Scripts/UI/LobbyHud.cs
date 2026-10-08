@@ -22,6 +22,23 @@ namespace EricRacer.UI
         [SerializeField] private Button lapsDown;
         [SerializeField] private Button lapsUp;
         [SerializeField] private Button startButton;
+        [SerializeField] private TMP_Text startLabel;
+        [SerializeField] private string startWaitingText = "WAITING...";
+        [SerializeField] private string startReadyText = "START!";
+        [Tooltip("How much the START button grows and shrinks when everyone is ready.")]
+        [SerializeField] private float startPulse = 0.06f;
+
+        [Header("Messages ({A}, {Space}... become coloured button labels)")]
+        [SerializeField, TextArea] private string choosingHint = "Press {A} / {Space} to ready!";
+        [SerializeField, TextArea] private string readyHint = "You're ready!   •   {B} / {Backspace} change racer";
+        [Tooltip("{0} = players ready, {1} = players in the lobby")]
+        [SerializeField] private string readyCount = "Ready: {0} / {1}";
+        [SerializeField] private string everyoneReadyHost = "Everyone's ready! Press {START} / {Enter}";
+        [SerializeField] private string everyoneReadyGuest = "Everyone's ready! Waiting for the host...";
+        [Tooltip("{0} = track name")]
+        [SerializeField] private string trackLabel = "Track: {0}";
+        [Tooltip("{0} = number of laps")]
+        [SerializeField] private string lapsLabel = "Laps: {0}";
 
         private readonly List<PlayerSession> m_Watched = new List<PlayerSession>();
 
@@ -66,24 +83,30 @@ namespace EricRacer.UI
         void Refresh()
         {
             var me = sessions.Local;
-            hintText.text = me != null && me.IsReady
-                ? "You're ready!   <size=70%>(B / Backspace to change racer)</size>"
-                : "<  >  pick your racer        A / Space  =  READY!";
+            hintText.text = ButtonHints.Format(me != null && me.IsReady ? readyHint : choosingHint);
 
             int ready = 0;
             foreach (var player in sessions.Players)
                 if (player.IsReady)
                     ready++;
 
-            bool everyoneReady = sessions.AllReady;
-            statusText.text = everyoneReady
-                ? (lobby.IsHost ? "Everyone's ready! Press START" : "Everyone's ready! Waiting for the host...")
-                : $"Ready: {ready} / {sessions.Players.Count}";
+            string status = sessions.AllReady
+                ? (lobby.IsHost ? everyoneReadyHost : everyoneReadyGuest)
+                : string.Format(readyCount, ready, sessions.Players.Count);
+            statusText.text = ButtonHints.Format(status);
 
             hostPanel.SetActive(lobby.IsHost);
-            trackText.text = $"Track: {lobby.Track.DisplayName}";
-            lapsText.text = $"Laps: {lobby.Laps}";
+            trackText.text = string.Format(trackLabel, lobby.Track.DisplayName);
+            lapsText.text = string.Format(lapsLabel, lobby.Laps);
             startButton.interactable = lobby.CanStart;
+            startLabel.text = lobby.CanStart ? startReadyText : startWaitingText;
+        }
+
+        void Update()
+        {
+            // Purely cosmetic: a gentle pulse so the host notices START once it's available.
+            float scale = startButton.interactable ? 1f + Mathf.Sin(Time.time * 5f) * startPulse : 1f;
+            startButton.transform.localScale = new Vector3(scale, scale, 1f);
         }
     }
 }
